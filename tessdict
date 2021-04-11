@@ -1,0 +1,18 @@
+#!/bin/bash
+sudo mv wordlistfile /usr/share/tesseract-ocr/4.00/tessdata
+cd /usr/share/tesseract-ocr/4.00/tessdata
+sudo mkdir traineddat_backup
+combine_tessdata -u eng.traineddata traineddat_backup/eng.
+wordlist2dawg wordlistfile eng.lstm-word-dawg traineddat_backup/eng.lstm-unicharset
+combine tessdata -o eng.traineddata eng.lstm-word-dawg
+cd traineddat_backup
+sudo mkdir tmp
+sudo mv eng.lstm-number-dawg  tmp
+sudo mv eng.lstm-punc-dawg tmp
+sudo mv eng.lstm-word-dawg tmp
+cd ..
+sudo mv eng.lstm-word-dawg traineddat_backup
+cd traineddat_backup
+combine_tessdata eng.
+sudo mv eng.traineddata new.traineddata  
+sudo mv new.traineddata ..
